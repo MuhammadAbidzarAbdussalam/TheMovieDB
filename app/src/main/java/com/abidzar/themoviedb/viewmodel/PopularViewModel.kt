@@ -5,21 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.abidzar.themoviedb.model.data.popular.Movie
-import com.abidzar.themoviedb.model.repository.DiscoverPagedListRepository
 import com.abidzar.themoviedb.model.repository.NetworkState
 import com.abidzar.themoviedb.model.repository.PopularPagedListRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-class DashboardViewModel(private val discoverRepository: DiscoverPagedListRepository, genreId: Int) : ViewModel() {
+class PopularViewModel (private val popularRepository: PopularPagedListRepository) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
     val moviePagedList : LiveData<PagedList<Movie>> by lazy {
-        discoverRepository.fetchLiveMoviePagedList(compositeDisposable, genreId)
+        popularRepository.fetchLiveMoviePagedList(compositeDisposable)
     }
 
     val networkState : LiveData<NetworkState> by lazy {
-        discoverRepository.getNetworkState()
+        popularRepository.getNetworkState()
     }
 
     fun listIsEmpty():Boolean {
@@ -30,5 +29,4 @@ class DashboardViewModel(private val discoverRepository: DiscoverPagedListReposi
         super.onCleared()
         compositeDisposable.dispose()
     }
-
 }

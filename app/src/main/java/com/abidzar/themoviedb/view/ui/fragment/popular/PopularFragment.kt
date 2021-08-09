@@ -1,4 +1,4 @@
-package com.abidzar.themoviedb.view.ui.fragment.home
+package com.abidzar.themoviedb.view.ui.fragment.popular
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,11 +18,11 @@ import com.abidzar.themoviedb.model.network.Service
 import com.abidzar.themoviedb.model.repository.NetworkState
 import com.abidzar.themoviedb.model.repository.PopularPagedListRepository
 import com.abidzar.themoviedb.view.adapter.PopularMoviePagedListAdapter
-import com.abidzar.themoviedb.viewmodel.HomeViewModel
+import com.abidzar.themoviedb.viewmodel.PopularViewModel
 
-class HomeFragment : Fragment() {
+class PopularFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var popularViewModel: PopularViewModel
 
     lateinit var moviePopularRepository: PopularPagedListRepository
 
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
         moviePopularRepository = PopularPagedListRepository(apiService)
 
         viewModelFactory = HomeViewModelFactory(moviePopularRepository)
-        homeViewModel = getViewModel()
+        popularViewModel = getViewModel()
 
         val movieAdapter = PopularMoviePagedListAdapter(requireContext())
 
@@ -71,15 +71,15 @@ class HomeFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = movieAdapter
 
-        homeViewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
+        popularViewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })
 
-        homeViewModel.networkState.observe(viewLifecycleOwner, Observer {
-            progressBarPopular.visibility = if (homeViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
-            txvErrorPopular.visibility = if (homeViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
+        popularViewModel.networkState.observe(viewLifecycleOwner, Observer {
+            progressBarPopular.visibility = if (popularViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
+            txvErrorPopular.visibility = if (popularViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
 
-            if (!homeViewModel.listIsEmpty()) {
+            if (!popularViewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)
             }
         })
@@ -87,8 +87,8 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    private fun getViewModel(): HomeViewModel {
-        return  ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+    private fun getViewModel(): PopularViewModel {
+        return  ViewModelProvider(this, viewModelFactory).get(PopularViewModel::class.java)
     }
 
     override fun onDestroyView() {
@@ -100,6 +100,6 @@ class HomeFragment : Fragment() {
 class HomeViewModelFactory(private var moviePopularRepository: PopularPagedListRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return HomeViewModel(moviePopularRepository) as T
+        return PopularViewModel(moviePopularRepository) as T
     }
 }

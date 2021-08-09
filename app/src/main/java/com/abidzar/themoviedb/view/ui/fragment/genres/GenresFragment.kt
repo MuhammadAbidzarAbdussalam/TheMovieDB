@@ -13,13 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abidzar.themoviedb.databinding.FragmentGenresBinding
 import com.abidzar.themoviedb.model.network.Instance
 import com.abidzar.themoviedb.model.network.Service
-import com.abidzar.themoviedb.model.repository.DiscoverPagedListRepository
 import com.abidzar.themoviedb.model.repository.GenresRepository
-import com.abidzar.themoviedb.model.repository.NetworkState
 import com.abidzar.themoviedb.view.adapter.GenresAdapter
-import com.abidzar.themoviedb.view.adapter.PopularMoviePagedListAdapter
-import com.abidzar.themoviedb.view.ui.fragment.dashboard.DiscoverViewModelFactory
-import com.abidzar.themoviedb.viewmodel.DashboardViewModel
 import com.abidzar.themoviedb.viewmodel.GenreViewModel
 
 class GenresFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.abidzar.themoviedb.view.ui.fragment.dashboard
+package com.abidzar.themoviedb.view.ui.fragment.discover
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,11 +22,11 @@ import com.abidzar.themoviedb.model.repository.DiscoverPagedListRepository
 import com.abidzar.themoviedb.model.repository.NetworkState
 import com.abidzar.themoviedb.view.adapter.PopularMoviePagedListAdapter
 import com.abidzar.themoviedb.view.ui.fragment.genres.GenresFragment
-import com.abidzar.themoviedb.viewmodel.DashboardViewModel
+import com.abidzar.themoviedb.viewmodel.DiscoverViewModel
 
-class DashboardFragment : Fragment() {
+class DiscoverFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var discoverViewModel: DiscoverViewModel
 
     lateinit var movieDiscoverRepository: DiscoverPagedListRepository
 
@@ -59,7 +59,7 @@ class DashboardFragment : Fragment() {
         movieDiscoverRepository = DiscoverPagedListRepository(apiService)
 
         viewModelFactory = DiscoverViewModelFactory(movieDiscoverRepository, genreId)
-        dashboardViewModel = getViewModel()
+        discoverViewModel = getViewModel()
 
         val movieAdapter = PopularMoviePagedListAdapter(requireContext())
 
@@ -91,15 +91,15 @@ class DashboardFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = movieAdapter
 
-        dashboardViewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
+        discoverViewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })
 
-        dashboardViewModel.networkState.observe(viewLifecycleOwner, Observer {
-            progressBarDiscover.visibility = if (dashboardViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
-            txvErrorDiscover.visibility = if (dashboardViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
+        discoverViewModel.networkState.observe(viewLifecycleOwner, Observer {
+            progressBarDiscover.visibility = if (discoverViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
+            txvErrorDiscover.visibility = if (discoverViewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
 
-            if (!dashboardViewModel.listIsEmpty()) {
+            if (!discoverViewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)
             }
         })
@@ -112,14 +112,14 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 
-    private fun getViewModel(): DashboardViewModel {
-        return  ViewModelProvider(this, viewModelFactory).get(DashboardViewModel::class.java)
+    private fun getViewModel(): DiscoverViewModel {
+        return  ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
     }
 }
 
 class DiscoverViewModelFactory(private var movieDiscoverRepository: DiscoverPagedListRepository, private var genreId: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return DashboardViewModel(movieDiscoverRepository, genreId) as T
+        return DiscoverViewModel(movieDiscoverRepository, genreId) as T
     }
 }

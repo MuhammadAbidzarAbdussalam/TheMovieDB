@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/containerLayout"
-    tools:context=".view.ui.fragment.dashboard.DashboardFragment">
+    tools:context=".view.ui.fragment.discover.DiscoverFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
