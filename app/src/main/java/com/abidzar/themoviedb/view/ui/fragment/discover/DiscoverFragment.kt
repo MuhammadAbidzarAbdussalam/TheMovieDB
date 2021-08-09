@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -23,6 +24,7 @@ import com.abidzar.themoviedb.model.repository.NetworkState
 import com.abidzar.themoviedb.view.adapter.PopularMoviePagedListAdapter
 import com.abidzar.themoviedb.view.ui.fragment.genres.GenresFragment
 import com.abidzar.themoviedb.viewmodel.DiscoverViewModel
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DiscoverFragment : Fragment() {
 
@@ -42,6 +44,7 @@ class DiscoverFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 
@@ -84,6 +87,7 @@ class DiscoverFragment : Fragment() {
 
             val transaction: FragmentTransaction= activity?.supportFragmentManager!!.beginTransaction()
             transaction.replace(R.id.container, genreFragment)
+            transaction.addToBackStack(null)
             transaction.commit()
         })
 
@@ -92,6 +96,7 @@ class DiscoverFragment : Fragment() {
         recyclerView.adapter = movieAdapter
 
         discoverViewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
+            println("WHEN AM I CALLED")
             movieAdapter.submitList(it)
         })
 
@@ -103,6 +108,26 @@ class DiscoverFragment : Fragment() {
                 movieAdapter.setNetworkState(it)
             }
         })
+
+        activity?.supportFragmentManager!!.setFragmentResultListener("requestKey", this) { key, bundle ->
+            val genreName = bundle.getString("genreName")
+            val genreIdBundle = bundle.getInt("genreId")
+            // Do something with the result
+            println("genreName $genreName")
+            println("genreId $genreIdBundle")
+            txvGenre.text = genreName
+            genreId = genreIdBundle
+
+            movieAdapter.submitList(null)
+
+            discoverViewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
+                println("WHEN AM I CALLED 22")
+                movieAdapter.submitList(it)
+            })
+
+            Toast.makeText(context, genreName, Toast.LENGTH_LONG).show()
+        }
+
 
         return root
     }

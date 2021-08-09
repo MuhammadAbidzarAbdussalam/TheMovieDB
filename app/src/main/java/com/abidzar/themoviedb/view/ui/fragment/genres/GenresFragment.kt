@@ -5,25 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abidzar.themoviedb.databinding.FragmentGenresBinding
+import com.abidzar.themoviedb.model.data.genre.Genre
 import com.abidzar.themoviedb.model.network.Instance
 import com.abidzar.themoviedb.model.network.Service
 import com.abidzar.themoviedb.model.repository.GenresRepository
 import com.abidzar.themoviedb.view.adapter.GenresAdapter
 import com.abidzar.themoviedb.viewmodel.GenreViewModel
 
-class GenresFragment : Fragment() {
+class GenresFragment : Fragment(), GenresAdapter.OnItemClickListener {
 
     private lateinit var genreViewModel: GenreViewModel
 
     lateinit var genresRepository: GenresRepository
 
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var genreList: List<Genre>
 
     private var _binding: FragmentGenresBinding? = null
     private val binding get() = _binding!!
@@ -48,7 +53,9 @@ class GenresFragment : Fragment() {
         genreViewModel = getViewModel()
 
         genreViewModel.genres.observe(viewLifecycleOwner, Observer {
-            val genresAdapter = GenresAdapter(requireContext(), it.genres)
+            val genresAdapter = GenresAdapter(requireContext(), it.genres, this)
+
+            genreList = it.genres
 
             val linearLayoutManager = LinearLayoutManager(requireContext())
 
@@ -74,6 +81,13 @@ class GenresFragment : Fragment() {
 
     private fun getViewModel(): GenreViewModel {
         return  ViewModelProvider(this, viewModelFactory).get(GenreViewModel::class.java)
+    }
+
+    override fun onItemClick(position: Int) {
+//        Toast.makeText(context, "Item ${genreList[position].name} clicked", Toast.LENGTH_SHORT).show()
+        // Use the Kotlin extension in the fragment-ktx artifact
+        activity?.supportFragmentManager!!.setFragmentResult("requestKey", bundleOf("genreName" to genreList[position].name, "genreId" to genreList[position].id))
+        requireActivity().supportFragmentManager.popBackStackImmediate()
     }
 
 }

@@ -12,12 +12,19 @@ class DiscoverDataSourceFactory(
 ) : DataSource.Factory<Int, Movie>() {
 
     val discoverLiveDataSource = MutableLiveData<DiscoverDataSource>()
+    lateinit var discoverDataSource: DiscoverDataSource
 
     override fun create(): DataSource<Int, Movie> {
-        val discoverDataSource = DiscoverDataSource(apiService, compositeDisposable, genreId)
+        discoverDataSource = DiscoverDataSource(apiService, compositeDisposable, genreId)
 
         discoverLiveDataSource.postValue(discoverDataSource)
         return discoverDataSource
+    }
+
+    fun invalidateDataSource() {
+        if (discoverDataSource != null) {
+            discoverDataSource.invalidate()
+        }
     }
 
 }

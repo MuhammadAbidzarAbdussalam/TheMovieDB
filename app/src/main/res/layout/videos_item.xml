@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    android:id="@+id/videoItem"
+    android:foreground="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/txvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/txvType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvName"
+        android:textColor="@color/black"/>
+
+   <LinearLayout
+       app:layout_constraintTop_toBottomOf="@+id/txvType"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:gravity="center"
+       android:layout_margin="16dp">
+
+       <TextView
+           android:id="@+id/txvSize"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:gravity="start"
+           android:text="TextView"
+           android:textColor="@color/grey_600"/>
+
+       <TextView
+           android:id="@+id/txvSite"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:ellipsize="end"
+           android:maxLines="5"
+           android:text="TextView"
+           android:textColor="@color/grey_600"/>
+
+       <TextView
+           android:id="@+id/txvPublished"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="3"
+           android:ellipsize="end"
+           android:maxLines="5"
+           android:gravity="end"
+           android:text="TextView"
+           android:textColor="@color/grey_600"/>
+
+   </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

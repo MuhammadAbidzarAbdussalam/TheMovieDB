@@ -22,7 +22,7 @@ class NetworkState(val status: Status, val msg: String) {
 
             ERROR = NetworkState(Status.FAILED, "Something went wrong")
 
-            ENDOFLIST = NetworkState(Status.FAILED, "Well done, you have reached the end")
+            ENDOFLIST = NetworkState(Status.FAILED, "~~End~~")
         }
     }
 

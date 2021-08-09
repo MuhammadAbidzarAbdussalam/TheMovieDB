@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/containerLayout"
-    tools:context=".view.ui.fragment.discover.DiscoverFragment">
+    tools:context=".view.ui.activity.ReviewsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,30 +14,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/genreSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txvGenre"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="All Genre"
-                android:layout_gravity="center"
-                android:textSize="16sp"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24"/>
-
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReviews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"/>
 
         <ProgressBar
             android:id="@+id/progressBarDiscover"
@@ -57,15 +37,5 @@
             android:text="Loading!!"
             android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDiscover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_below="@+id/genreSpinner"/>
-
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

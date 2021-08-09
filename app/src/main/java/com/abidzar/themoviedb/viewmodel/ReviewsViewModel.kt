@@ -1,29 +1,29 @@
 package com.abidzar.themoviedb.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.abidzar.themoviedb.model.data.popular.Movie
+import com.abidzar.themoviedb.model.data.reviews.ReviewResult
 import com.abidzar.themoviedb.model.repository.DiscoverPagedListRepository
 import com.abidzar.themoviedb.model.repository.NetworkState
-import com.abidzar.themoviedb.model.repository.PopularPagedListRepository
+import com.abidzar.themoviedb.model.repository.ReviewsPagedListRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-class DiscoverViewModel(private val discoverRepository: DiscoverPagedListRepository, genreId: Int) : ViewModel() {
+class ReviewsViewModel (private val reviewsRepository: ReviewsPagedListRepository, movieId: Int) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    val moviePagedList : LiveData<PagedList<Movie>> by lazy {
-        discoverRepository.fetchLiveMoviePagedList(compositeDisposable, genreId)
+    val reviewsPagedList : LiveData<PagedList<ReviewResult>> by lazy {
+        reviewsRepository.fetchLiveReviewsPagedList(compositeDisposable, movieId)
     }
 
     val networkState : LiveData<NetworkState> by lazy {
-        discoverRepository.getNetworkState()
+        reviewsRepository.getNetworkState()
     }
 
     fun listIsEmpty():Boolean {
-        return moviePagedList.value?.isEmpty() ?: true
+        return reviewsPagedList.value?.isEmpty() ?: true
     }
 
     override fun onCleared() {
@@ -32,7 +32,7 @@ class DiscoverViewModel(private val discoverRepository: DiscoverPagedListReposit
     }
 
     fun invalidateDataSource() {
-        discoverRepository.discoverDataSourceFactory.discoverDataSource.invalidate()
+        reviewsRepository.reviewsDataSourceFactory.reviewsDataSource.invalidate()
     }
 
 }

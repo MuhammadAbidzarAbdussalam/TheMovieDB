@@ -19,6 +19,7 @@ class DiscoverPagedListRepository (private val apiService: Service)  {
     lateinit var discoverDataSourceFactory: DiscoverDataSourceFactory
 
     fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable, genreId: Int) : LiveData<PagedList<Movie>> {
+        println("AKUDISINIS?")
         discoverDataSourceFactory = DiscoverDataSourceFactory(apiService, compositeDisposable, genreId)
 
         val config:PagedList.Config = PagedList.Config.Builder()
@@ -33,6 +34,12 @@ class DiscoverPagedListRepository (private val apiService: Service)  {
 
     fun getNetworkState(): LiveData<NetworkState>{
         return Transformations.switchMap<DiscoverDataSource, NetworkState>(discoverDataSourceFactory.discoverLiveDataSource, DiscoverDataSource::networkState)
+    }
+
+    fun invalidateDataSource() {
+        if (discoverDataSourceFactory != null) {
+            discoverDataSourceFactory.discoverDataSource.invalidate()
+        }
     }
 
 }
