@@ -1,4 +1,4 @@
-package com.abidzar.themoviedb.view.ui.notifications
+package com.abidzar.themoviedb.view.ui.fragment.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

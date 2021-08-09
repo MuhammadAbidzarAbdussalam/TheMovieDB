@@ -1,4 +1,4 @@
-package com.abidzar.themoviedb.view.ui.home
+package com.abidzar.themoviedb.view.ui.fragment.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

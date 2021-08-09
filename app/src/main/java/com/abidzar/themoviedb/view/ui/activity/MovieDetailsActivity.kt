@@ -3,7 +3,6 @@ package com.abidzar.themoviedb.view.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,14 +12,9 @@ import com.abidzar.themoviedb.model.network.Instance
 import com.abidzar.themoviedb.model.network.Service
 import com.abidzar.themoviedb.model.network.posterBaseURL
 import com.abidzar.themoviedb.model.repository.MovieDetailsRepository
-import com.abidzar.themoviedb.model.repository.NetworkState
-import com.abidzar.themoviedb.model.repository.PopularPagedListRepository
-import com.abidzar.themoviedb.view.ui.home.HomeViewModelFactory
-import com.abidzar.themoviedb.viewmodel.HomeViewModel
 import com.abidzar.themoviedb.viewmodel.MovieDetailsViewModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_movie_details.*
-import kotlinx.android.synthetic.main.network_state_item.*
 import java.text.NumberFormat
 import java.util.*
 

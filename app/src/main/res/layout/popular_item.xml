@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="Judul"
         android:maxLines="1"
+        android:ellipsize="end"
         android:textStyle="bold"
         android:layout_marginStart="8dp"/>
 

@@ -1,6 +1,8 @@
 package com.abidzar.themoviedb.model.network
 
 import com.abidzar.themoviedb.model.data.details.MovieDetails
+import com.abidzar.themoviedb.model.data.genre.Genre
+import com.abidzar.themoviedb.model.data.genre.Genres
 import com.abidzar.themoviedb.model.data.popular.PopularList
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
@@ -17,4 +19,7 @@ interface Service {
 
     @GET("discover/movie")
     fun getDiscoverMovies(@Query("page") page: Int, @Query("with_genres") genreId: Int): Single<PopularList>
+
+    @GET("genre/movie/list")
+    fun getGenre(): Single<Genres>
 }
